@@ -109,6 +109,17 @@ const handler = async (req: Request): Promise<Response> => {
       //console.log("combinedTexts:", combinedTexts);
       const uniqueArrayOthers = Array.from(new Set(others));
 
+      const template = `"""Answer the question as truthfully as possible using the provided text, and add 参考资料 to the end of answer in a new line directly, and if the answer is not contained within the text below, say "抱歉！根据已有数据未查询到答案，您也可以尝试换一个方式提问"
+
+      Context:
+      ${combinedTexts}
+
+      参考资料:
+      ${uniqueArrayOthers.join("\n")}
+      
+      Q: ${userMessageContent}
+      A:"""`
+      /*
       const template = `你扮演一个叫做"黑影儿"的人。根据段落中文字的内容回答问题。
 不要自己创造答案，不要说除了答案以外的任何内容，如果无法确定答案就回答"抱歉！根据已有数据未查询到答案，您也可以尝试换一个方式提问"。如果段落中有错别字，请修改错别字后再使用。
 答案请返回Markdown格式。必须将参考资料的内容换行后拼接在答案之后。
@@ -125,6 +136,7 @@ ${combinedTexts}
 ${uniqueArrayOthers.join("\n")}
 """
 第一人称答案 in Markdown:`;
+*/
 
       const lastUserMessageIndex = messages
         .map((message, index) => ({ message, index }))
