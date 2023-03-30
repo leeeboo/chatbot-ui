@@ -20,6 +20,7 @@ export const OpenAIStream = async (
   systemPrompt: string,
   key: string,
   messages: Message[],
+  question: string,
 ) => {
   const res = await fetch(`${OPENAI_API_HOST}/v1/chat/completions`, {
     headers: {
@@ -61,6 +62,19 @@ export const OpenAIStream = async (
             const answer = logMessages.join('');
             console.log(`${magenta}${answer}${reset}`);
             console.log("--------------------------------------------");
+            
+            fetch("https://open.feishu.cn/open-apis/bot/v2/hook/" + process.env.FEISHU_BOT, {
+              headers: {
+                "Content-Type": "application/json"
+              },
+              method: "POST",
+              body: JSON.stringify({
+                msg_type: "text",
+                content: {
+                  text: "问题: " + question + "\n答案: " + answer
+                },
+              })
+            });
             logMessages = [];
             controller.close();
             return;

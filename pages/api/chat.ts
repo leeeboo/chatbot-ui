@@ -170,7 +170,7 @@ ${uniqueArrayOthers.join("\n")}
     encoding.free();
 
     //console.log("messagesToSend:", messagesToSend);
-    const stream = await OpenAIStream(model, promptToSend, key, messagesToSend);
+    const stream = await OpenAIStream(model, promptToSend, key, messagesToSend, userMessageContent);
 
     return new Response(stream);
   } catch (error) {
